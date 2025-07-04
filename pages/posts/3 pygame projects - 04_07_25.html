@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 Python Projects to Make with Pygame | CodeVault</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="../../index.html" class="logo">
+                <img src="../../assets/logo.png" alt="TechBlog Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../contact/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="post-container">
+            <div class="post-header">
+                <div class="post-meta">
+                    <span class="post-category">Python</span>
+                    <span class="post-date">July 4, 2025</span>
+                </div>
+                <h1 class="post-title">3 Python Projects to Make with Pygame</h1>
+            </div>
+
+            <div class="post-content">
+                <h2>Start Building Games with Python and Pygame</h2>
+                <p><strong>Pygame</strong> is a powerful and beginner-friendly library that lets you build games and multimedia applications in Python. Whether you're just starting or looking for practical Python projects, these three game ideas will sharpen your programming and problem-solving skills.</p>
+
+                <hr>
+
+                <h3>1. Chrome Dino Jump Clone</h3>
+                <p>This endless runner is a great introduction to collision, jumping physics, and animation.</p>
+                
+                <h4>What You'll Learn:</h4>
+                <ul>
+                    <li>Basic game loops and events</li>
+                    <li>How to draw and move sprites</li>
+                    <li>Gravity and jump mechanics</li>
+                    <li>Collision detection</li>
+                </ul>
+
+                <h4>Starter Code:</h4>
+                <pre><code>import pygame
+import sys
+
+pygame.init()
+screen = pygame.display.set_mode((800, 400))
+clock = pygame.time.Clock()
+gravity = 0
+jumping = False
+player_rect = pygame.Rect(100, 300, 50, 50)
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN and not jumping:
+            if event.key == pygame.K_SPACE:
+                gravity = -15
+                jumping = True
+
+    gravity += 1
+    player_rect.y += gravity
+    if player_rect.y >= 300:
+        player_rect.y = 300
+        jumping = False
+
+    screen.fill("white")
+    pygame.draw.rect(screen, "blue", player_rect)
+    pygame.draw.line(screen, "black", (0, 350), (800, 350), 3)
+    pygame.display.update()
+    clock.tick(60)</code></pre>
+
+                <p>Enhance it by adding obstacle spawning, collision detection, and score tracking!</p>
+
+                <hr>
+
+                <h3>2. Top-Down Shooter</h3>
+                <p>This intermediate project lets you aim and shoot at enemies. You’ll learn object-oriented programming with classes.</p>
+
+                <h4>What You'll Learn:</h4>
+                <ul>
+                    <li>Object-oriented design</li>
+                    <li>Mouse input and aiming</li>
+                    <li>Projectile firing</li>
+                    <li>Sprite groups and collision</li>
+                </ul>
+
+                <h4>Basic Setup:</h4>
+                <pre><code>import pygame
+import sys
+import math
+
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+clock = pygame.time.Clock()
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface((40, 40))
+        self.image.fill("green")
+        self.rect = self.image.get_rect(center=(400, 300))
+
+    def update(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_w]: self.rect.y -= 5
+        if keys[pygame.K_s]: self.rect.y += 5
+        if keys[pygame.K_a]: self.rect.x -= 5
+        if keys[pygame.K_d]: self.rect.x += 5
+
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, pos, target):
+        super().__init__()
+        self.image = pygame.Surface((5, 5))
+        self.image.fill("red")
+        self.rect = self.image.get_rect(center=pos)
+        dx, dy = target[0] - pos[0], target[1] - pos[1]
+        dist = math.hypot(dx, dy)
+        self.velocity = (dx / dist * 10, dy / dist * 10)
+
+    def update(self):
+        self.rect.x += self.velocity[0]
+        self.rect.y += self.velocity[1]
+
+player = Player()
+player_group = pygame.sprite.Group(player)
+bullet_group = pygame.sprite.Group()
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT: pygame.quit(); sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            bullet = Bullet(player.rect.center, pygame.mouse.get_pos())
+            bullet_group.add(bullet)
+
+    screen.fill("black")
+    player_group.update()
+    bullet_group.update()
+    player_group.draw(screen)
+    bullet_group.draw(screen)
+    pygame.display.update()
+    clock.tick(60)</code></pre>
+
+                <p>Add enemies, health, and scoring to turn this into a complete game.</p>
+
+                <hr>
+
+                <h3>3. Sliding Tile Puzzle (15-Puzzle)</h3>
+                <p>Build a 4x4 tile puzzle where the player rearranges shuffled tiles into the correct order.</p>
+
+                <h4>What You'll Learn:</h4>
+                <ul>
+                    <li>Grid-based logic</li>
+                    <li>Handling clicks and swapping</li>
+                    <li>Victory condition checks</li>
+                </ul>
+
+                <h4>Board Setup:</h4>
+                <pre><code>import pygame
+import random
+
+pygame.init()
+screen = pygame.display.set_mode((400, 400))
+font = pygame.font.SysFont(None, 40)
+clock = pygame.time.Clock()
+
+TILE_SIZE = 100
+grid = [[(i * 4 + j + 1) % 16 for j in range(4)] for i in range(4)]
+
+def draw_grid():
+    screen.fill("white")
+    for i in range(4):
+        for j in range(4):
+            val = grid[i][j]
+            if val != 0:
+                pygame.draw.rect(screen, "skyblue", (j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE))
+                text = font.render(str(val), True, "black")
+                screen.blit(text, (j*TILE_SIZE + 35, i*TILE_SIZE + 30))
+
+def get_empty_pos():
+    for i in range(4):
+        for j in range(4):
+            if grid[i][j] == 0:
+                return i, j
+
+def move_tile(i, j):
+    empty_i, empty_j = get_empty_pos()
+    if abs(i - empty_i) + abs(j - empty_j) == 1:
+        grid[empty_i][empty_j], grid[i][j] = grid[i][j], 0
+
+random.shuffle([val for row in grid for val in row])  # Simplified shuffle for demo
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT: pygame.quit(); exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = pygame.mouse.get_pos()
+            move_tile(y // TILE_SIZE, x // TILE_SIZE)
+
+    draw_grid()
+    pygame.display.update()
+    clock.tick(30)</code></pre>
+
+                <p>You can add a move counter, time limit, or victory check to challenge users further.</p>
+
+                <hr>
+
+                <h2>Conclusion</h2>
+                <p>These Pygame projects go beyond Hello World. They help you build core programming skills while making something fun. Whether you’re jumping over cacti, firing bullets, or solving puzzles — you’re learning loops, logic, and design.</p>
+                <p>Once you’re confident, consider turning one of these into a full app, adding menus, sound effects, or exporting it as a standalone game.</p>
+                <p>Want to see the full source code or download the assets? Reach out via our contact page!</p>
+            </div>
+
+            <div class="post-author">
+                <p>By Thomas White</p>
+            </div>
+
+            <a href="../../../index.html" class="back-button">← Back to all articles</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CodeVault. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
