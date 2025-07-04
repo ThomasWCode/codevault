@@ -5,7 +5,7 @@ const blogPosts = [
         title: "Getting Started with React Hooks",
         excerpt: "Learn how to use React Hooks to build more efficient and cleaner React applications.",
         category: "Python",
-        date: "July 4, 2025<",
+        date: "July 4, 2025",
         author: "Thomas White",
         filename: "3 pygame projects - 04_07_25.html"
     }
