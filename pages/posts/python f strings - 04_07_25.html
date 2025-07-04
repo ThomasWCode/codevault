@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering Python f-Strings | CodeVault</title>
+    <link rel="icon" type="image/x-icon" href="assets/initials no bg.ico">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="../../index.html" class="logo">
+                <img src="../../assets/logo.png" alt="TechBlog Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../contact/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="post-container">
+            <div class="post-header">
+                <div class="post-meta">
+                    <span class="post-category">Python</span>
+                    <span class="post-date">July 4, 2025</span>
+                </div>
+                <h1 class="post-title">Python f-Strings</h1>
+            </div>
+
+            <div class="post-content">
+                <h2>The Modern Way to Format Strings in Python</h2>
+                <p><strong>f-strings</strong> (formatted string literals) were introduced in Python 3.6 and have become the go-to method for string formatting. They're fast, readable, and incredibly flexible.</p>
+                <p>However, when partnered with user input, they can be a liability...</p>
+
+                <hr>
+
+                <h3>1. Basic Syntax</h3>
+                <p>Prefix your string with <code>f</code> and insert variables using curly braces:</p>
+                <p>Unlike when concatenating variables, you do not need to cast all your variables to strings with <code>str()</code>.</p>
+                <pre><code>name = "Alice"
+age = 30
+print(f"My name is {name} and I'm {age} years old.")</code></pre>
+                <p>Output:</p>
+                <pre><code>My name is Alice and I'm 30 years old.</code></pre>
+        
+                <hr>
+
+                <h3>2. Expressions Inside f-Strings</h3>
+                <p>You can use expressions directly inside curly braces:</p>
+                <pre><code>print(f"5 + 3 = {5 + 3}")</code></pre>
+                <p>Output:</p>
+                <pre><code>5 + 3 = 8</code></pre>
+
+                <hr>
+
+                <h3>3. Function Calls</h3>
+                <p>Functions can be called inside f-strings:</p>
+                <pre><code>def greet(name):
+    return f"Hello, {name}!"
+
+print(f"{greet('Bob')}")</code></pre>
+                <p>Output:</p>
+                <pre><code>Hello, Bob!</code></pre>
+
+                <hr>
+
+                <h3>4. Formatting Numbers</h3>
+                <p>Control decimal places by adding `:.2f` after your variable, changing the number to fit your desired number of decimal points:</p>
+                <pre><code>pi = 3.1415926535
+print(f"Pi to 2 decimal places: {pi:.2f}")</code></pre>
+                <p>Output:</p>
+                <pre><code>Pi to 2 decimal places: 3.14</code></pre>
+
+                <hr>
+
+                <h3>5. Padding and Alignment</h3>
+                <p>Align text using <code>&lt;</code>, <code>^</code>, and <code>&gt;</code> with width:</p>
+                <pre><code>print(f"{'Left':<10}{'Center':^10}{'Right':>10}")</code></pre>
+                <p>Output:</p>
+                <pre><code>Left      Center      Right</code></pre>
+
+                <p>Instead of padding with spaces, you can also pad with any character by putting it before the arrow symbol:</p>
+                <pre><code>print(f"{'Left':-<30}")
+print(f"{'Center':_^30}")
+print(f"{'Right':#>30}")</code></pre>
+                <p>Output:</p>
+                <pre><code>Left--------------------------
+____________Center____________
+#########################Right</code></pre>
+
+                <hr>
+
+                <h3>6. Debugging with =</h3>
+                <p>Python 3.8+ allows <code>=</code> for quick debugging:</p>
+                <pre><code>value = 42
+print(f"{value=}")</code></pre>
+                <p>Output:</p>
+                <pre><code>value=42</code></pre>
+
+                <hr>
+
+                <h3>7. Multiline f-Strings</h3>
+                <p>Use triple quotes for long or multiline strings:</p>
+                <pre><code>name = "Eve"
+age = 22
+print(f"""Name: {name}
+Age: {age}""")</code></pre>
+                <p>Output:</p>
+                <pre><code>Name: Eve
+Age: 22</code></pre>
+
+                <hr>
+
+                <h3>⚠️ f-String Dangers</h3>
+
+                <p>f-strings are powerful, but dangerous if used with untrusted input.</p>
+                <br>
+                <h4>SQL Injection</h4>
+                <p>Don't build SQL with f-strings. It can allow attackers to run harmful SQL.</p>
+
+                <p><strong>❌ Unsafe:</strong></p>
+                <pre><code>cursor.execute(f"SELECT * FROM users WHERE username = '{username}'")</code></pre>
+
+                <p>This could delete your entire database.</p>
+
+                <p><strong>✅ Safe:</strong></p>
+                <pre><code>cursor.execute("SELECT * FROM users WHERE username = ?", (username,))</code></pre>
+                <br>
+                <h4>Code Injection</h4>
+                <p>Never run f-strings with <code>eval()</code> or <code>exec()</code> on user input.</p>
+
+                <p><strong>❌ Unsafe:</strong></p>
+                <pre><code>eval(f"print({user_input})")</code></pre>
+
+                <p>The user can easily get out of the print by entering the correct input, allowing them to run actual harmful code instead.</p>
+
+                <p><strong>✅ Safe:</strong> Don’t use <code>eval()</code> unless absolutely necessary. Avoid running raw input as code, make sure to sanitise it first.</p>
+
+                <hr>
+
+                <h2>Conclusion</h2>
+                <p>f-Strings are one of the best additions to modern Python. They're readable, flexible, and powerful for string formatting, debugging, and data presentation. Start using them to make your code cleaner and quicker.</p>
+            </div>
+
+            <div class="post-author">
+                <p>By Thomas White</p>
+            </div>
+
+            <a href="../../../index.html" class="back-button">← Back to all articles</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CodeVault. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
