@@ -4,7 +4,7 @@ const blogPosts = [
         id: 1,
         title: "3 Basic Python Pygame Projects",
         excerpt: "3 ideas for your first python pygame games. Including code snippets.",
-        category: "Python",
+        category: "Python - Pygame",
         date: "July 4, 2025",
         author: "Thomas White",
         filename: "3 pygame projects - 04_07_25.html"
