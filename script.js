@@ -28,7 +28,7 @@ function renderBlogPosts(posts) {
             <div class="blog-content">
                 <div class="blog-meta">
                     <span class="blog-category">${post.category}</span>
-                    <span class="blog-date">${new Date(post.date).toLocaleDateString()}</span>
+                    <span class="blog-date">${post.date}</span>
                 </div>
                 <h3 class="blog-title">${post.title}</h3>
                 <p class="blog-excerpt">${post.excerpt}</p>
