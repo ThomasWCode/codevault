@@ -2,8 +2,8 @@
 const blogPosts = [
     {
         id: 1,
-        title: "Getting Started with React Hooks",
-        excerpt: "Learn how to use React Hooks to build more efficient and cleaner React applications.",
+        title: "3 Basic Python Pygame Projects",
+        excerpt: "3 ideas for your first python pygame games. Including code snippets.",
         category: "Python",
         date: "July 4, 2025",
         author: "Thomas White",
